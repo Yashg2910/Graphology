@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<main role="main">
+  <div class="container text-center">
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+    <br>
+    <div class="input-group mb-3">
+      <div class="custom-file text-left">
+        <input type="file" class="custom-file-input" id="inputGroupFile02" name="myfile" >
+        <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose file</label>
+      </div>
+      <div class="input-group-append">
+        <button class=" btn btn-success" id="inputGroupFileAddon02" type="submit">Predict</button>
+      </div>
+    </div>
+  </form>
+
+
+  </div>
+</main>
+
+{% endblock %}

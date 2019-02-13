@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <!--<img src="{{ img_url }}" style="height: 500px; width: auto;">
+    <ul>
+        <li><p>BASE ANGLE: {{ result.Baseline_Angle }}</p></li>
+    </ul>-->
+
+<main role="main">
+    <div class="container text-center">
+        <img src="{{ img_url }}" style="height: 300px; width: auto;">
+        <br><br>
+        <div class="row">
+
+            <div class="col">
+                <div class="card shadow-lg">
+                  <h5 class="card-header">Features</h5>
+                  <div class="card-body text-left">
+                      <p class="card-text">Baseline Angle: {{ result.Baseline_Angle }}</p>
+                      <p class="card-text">Top Margin: {{ result.Top_margin }}</p>
+                      <p class="card-text">Letter Size: {{ result.Letter_Size }}</p>
+                      <p class="card-text">Line Spacing: {{ result.Line_Spacing }}</p>
+                      <p class="card-text">Word Spacing: {{ result.Word_Spacing }}</p>
+                      <p class="card-text">Pen Pressure: {{ result.Pen_Pressure }}</p>
+                      <p class="card-text">Slant: {{ result.Slant }}</p>
+                  </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card shadow-lg" >
+                  <h5 class="card-header">Traits</h5>
+                  <div class="card-body text-left">
+                      <p class="card-text">
+                          Emotional Stability:
+                          {% if result.Emotional_Stability == 1.0 %}
+                           <span class="badge badge-success">Yes</span>
+                          {% else %}
+                           <span class="badge badge-info">No</span>
+                          {% endif %}
+                      </p>
+                      <p class="card-text">Menatal Energy or will power:
+                          {% if result.Mental_Energy_or_Will_power == 1.0 %}
+                           <span class="badge badge-success">Yes</span>
+                          {% else %}
+                           <span class="badge badge-info">No</span>
+                          {% endif %}
+                      </p>
+                      <p class="card-text">Modesty:
+                          {% if result.Modesty == 1.0 %}
+                           <span class="badge badge-success">Yes</span>
+                          {% else %}
+                           <span class="badge badge-info">No</span>
+                          {% endif %}
+                      </p>
+                      <p class="card-text">Personal Harmony:
+                          {% if result.Personal_Harmony_or_Will_Power == 1.0 %}
+                           <span class="badge badge-success">Yes</span>
+                          {% else %}
+                           <span class="badge badge-info">No</span>
+                          {% endif %}
+                      </p>
+                      <p class="card-text">Lack of Discipline:
+                          {% if result.Lack_of_Discipline == 1.0 %}
+                           <span class="badge badge-success">Yes</span>
+                          {% else %}
+                           <span class="badge badge-info">No</span>
+                          {% endif %}
+                      </p>
+                      <p class="card-text">Poor Concentration:
+                          {% if result.Poor_Concentration == 1.0 %}
+                           <span class="badge badge-success">Yes</span>
+                          {% else %}
+                           <span class="badge badge-info">No</span>
+                          {% endif %}
+                      </p>
+                      <p class="card-text">Non Communicativeness:
+                          {% if result.Non_Communicativeness == 1.0 %}
+                           <span class="badge badge-success">Yes</span>
+                          {% else %}
+                           <span class="badge badge-info">No</span>
+                          {% endif %}
+                      </p>
+                      <p class="card-text">Social Isolation:
+                          {% if result.Social_Isolation == 1.0 %}
+                           <span class="badge badge-success">Yes</span>
+                          {% else %}
+                           <span class="badge badge-info">No</span>
+                          {% endif %}
+                      </p>
+                  </div>
+                </div>
+            </div>
+
+        </div>
+        <br><br>
+        <div class="row">
+            <div class="col">
+                <div class="card shadow-lg" >
+                  <h5 class="card-header">Summary</h5>
+                  <div class="card-body text-left">
+                      <p>{{ summary }}</p>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</main>
+{% endblock %}
