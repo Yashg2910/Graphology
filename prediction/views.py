@@ -12,6 +12,7 @@ def simple_upload(request):
         filename = fs.save(myfile.name, myfile)
         uploaded_file_url = fs.url(filename)
         to_email = request.POST['email']
+
         #return render(request, 'upload.html', {
         #    'uploaded_file_url': uploaded_file_url
         #})
@@ -22,9 +23,10 @@ def simple_upload(request):
             'img_url': uploaded_file_url,
             'summary': summ,
         }
-        message = summ
-        mail_subject = "Personality prediction using handwriting analysis"
-        send_mail(mail_subject, message, 'evolettech@gmail.com', [to_email])
+        message = "Hello, Based on your handwriting, we analysed following predictions about you: \n"+summ
+        if to_email != "":
+            mail_subject = "Personality prediction using handwriting analysis"
+            send_mail(mail_subject, message, 'evolettech@gmail.com', [to_email])
         return render(request, 'output.html', context)
 
     return render(request, 'upload.html')

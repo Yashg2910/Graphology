@@ -1,15 +1,20 @@
 def summary(msg):
     sum = ""
     baseline_sum = get_baseline_sum(msg["Baseline_Angle"])
+    baseline_sum = "You have traits like "+baseline_sum
     margin_sum = get_margin_sum(msg["Top_margin"])
+    margin_sum = "The way you leave margin denotes that you are "+margin_sum
     size_sum = get_letter_size_sum(msg["Letter_Size"])
+    size_sum = "You letter size depicts "+size_sum
     line_sum = get_line_spacing_sum(msg["Line_Spacing"])
     word_sum = get_word_spacing_sum(msg["Word_Spacing"])
     pressure_sum = get_pressure_sum(msg["Pen_Pressure"])
+    pressure_sum = "You have "+pressure_sum
     slant_sum = get_slant_angle_sum(msg["Slant"])
-
-    sum = "#" +baseline_sum+margin_sum+size_sum+line_sum+ word_sum+ pressure_sum+ slant_sum
+    slant_sum = "Your are "+slant_sum
+    sum = baseline_sum+"\n"+margin_sum+"\n"+size_sum+"\n"+line_sum+"\n"+ word_sum+"\n"+ pressure_sum+"\n"+ slant_sum
     return sum
+
 
 def get_baseline_sum(base_angle):
 
@@ -21,8 +26,8 @@ def get_baseline_sum(base_angle):
         sum = " Optimistic, hopefulness, cheerfulness, Active, Excitability"
     elif base_angle == "STRAIGHT":
         sum = "Balanced, stable, realism, disciplined"
-    sum = sum+" #"
     return sum
+
 
 def get_margin_sum(top_margin):
     sum = ""
@@ -30,8 +35,8 @@ def get_margin_sum(top_margin):
         sum = "courageous, self-disciplined, balanced"
     elif top_margin == "NARROW":
         sum = "Insecure and devotes onself completely"
-    sum = sum + " #"
     return sum
+
 
 def get_letter_size_sum(letter_size):
     sum = ""
@@ -41,8 +46,8 @@ def get_letter_size_sum(letter_size):
         sum = "seclusion and shyness"
     elif letter_size == "MEDIUM":
         sum = "c"
-    sum = sum + " #"
     return sum
+
 
 def get_line_spacing_sum(line_spacing):
     sum = ""
@@ -52,8 +57,8 @@ def get_line_spacing_sum(line_spacing):
         sum = "b"
     elif line_spacing == "MEDIUM":
         sum = "c"
-    sum = sum + " #"
     return sum
+
 
 def get_word_spacing_sum(word_spacing):
     sum = ""
@@ -63,7 +68,6 @@ def get_word_spacing_sum(word_spacing):
         sum = " inability to be alone, poor taste, friendliness."
     elif word_spacing == "MEDIUM":
         sum = ""
-    sum = sum + " #"
     return sum
 
 def get_pressure_sum(pen_pressure):
@@ -74,8 +78,8 @@ def get_pressure_sum(pen_pressure):
         sum = "calmness, passivity, lack of energy"
     elif pen_pressure == "MEDIUM":
         sum = "Feelings not very intense"
-    sum = sum + " #"
     return sum
+
 
 def get_slant_angle_sum(slant_angle):
 
@@ -94,5 +98,4 @@ def get_slant_angle_sum(slant_angle):
         sum = "head controls over heart, independent, emotional nature, works independently"
     elif slant_angle == "IRREGULAR":
         sum = "Emotionally unstable"
-    sum = sum + ""
     return sum
