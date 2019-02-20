@@ -61,21 +61,23 @@ def straighten(image):
 	
 	# apply bilateral filter
 	filtered = bilateralFilter(image, 3)
-	#cv2.imshow('filtered',filtered)
+	cv2.imshow('filtered',filtered)
 
 	# convert to grayscale and binarize the image by INVERTED binary thresholding
 	thresh = threshold(filtered, 120)
-	#cv2.imshow('thresh',thresh)
+	cv2.imshow('thresh',thresh)
 	
 	# dilate the handwritten lines in image with a suitable kernel for contour operation
 	dilated = dilate(thresh, (5 ,100))
-	#cv2.imshow('dilated',dilated)
+	cv2.imshow('dilated',dilated)
 	
 	ctrs,hier = cv2.findContours(dilated.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-	
+
+	k=0
 	for i, ctr in enumerate(ctrs):
 		x, y, w, h = cv2.boundingRect(ctr)
-		
+
+		k +=1
 		# We can be sure the contour is not a line if height > width or height is < 20 pixels. Here 20 is arbitrary.
 		if h>w or h<20:
 			continue
@@ -86,7 +88,7 @@ def straighten(image):
 		
 		# If the length of the line is less than one third of the document width, especially for the last line,
 		# ignore because it may yeild inacurate baseline angle which subsequently affects proceeding features.
-		
+
 		if w < image.shape[1]/2 :
 			roi = 255
 			image[y:y+h, x:x+w] = roi
@@ -109,6 +111,8 @@ def straighten(image):
 
 		# image is overwritten with the straightened contour
 		image[y:y+h, x:x+w] = extract
+
+
 		'''
 		# Please Ignore. This is to draw visual representation of the contour rotation.
 		box = cv2.boxPoints(rect)
@@ -116,9 +120,11 @@ def straighten(image):
 		cv2.drawContours(display,[box],0,(0,0,255),1)
 		cv2.rectangle(display,(x,y),( x + w, y + h ),(0,255,0),1)
 		'''
+
 		#print angle
 		angle_sum += angle
 		countour_count += 1
+
 	'''	
 		# sum of all the angles of downward baseline
 		if(angle>0.0):
@@ -146,6 +152,12 @@ def straighten(image):
 	#cv2.imshow('countours', display)
 	
 	# mean angle of the contours (not lines) is found
+	print "Countour value before division"+str(countour_count)
+
+	# **Error prevent
+	if countour_count == 0:
+		countour_count=k
+
 	mean_angle = angle_sum / countour_count
 	BASELINE_ANGLE = mean_angle
 	#print ("Average baseline angle: "+str(mean_angle))
@@ -360,7 +372,9 @@ def extractLines(img):
 	# letter size is actually height of the letter and we are not considering width
 	LETTER_SIZE = average_letter_size
 	# error prevention ^-^
-	if(average_letter_size == 0): average_letter_size = 1
+	if(average_letter_size == 0):
+		average_letter_size = 1
+		LETTER_SIZE = 1
 	# We can't just take the average_line_spacing as a feature directly. We must take the average_line_spacing relative to average_letter_size.
 	# Let's take the ratio of average_line_spacing to average_letter_size as the LINE SPACING, which is perspective to average_letter_size.
 	relative_line_spacing = average_line_spacing / average_letter_size
@@ -614,7 +628,7 @@ def extractSlant(img, words):
 				#print 'line '+str(i)+' '+str(s_temp)
 				#print
 			'''
-				
+
 		s_function[i] = s_temp
 		count_[i] = count
 	
@@ -654,6 +668,11 @@ def extractSlant(img, words):
 		angle = -45
 		result = " : Extremely left slanted"
 	elif(max_index == 4):
+		if s_function[3] == 0.0:
+			s_function[3] = 0.1
+		if s_function[5] == 0.0:
+			s_function[5] = 0.1
+
 		p = s_function[4] / s_function[3]
 		q = s_function[4] / s_function[5]
 		#print 'p='+str(p)+' q='+str(q)
@@ -668,7 +687,8 @@ def extractSlant(img, words):
 			max_index = 9
 			angle = 180
 			result =  " : Irregular slant behaviour"
-		
+
+		angle=0
 		
 		if angle == 0:
 			print "\n************************************************"

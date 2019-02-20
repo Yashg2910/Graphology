@@ -97,17 +97,82 @@
         </div>
         <br><br>
         <div class="row">
+
+        </div>
+        <div class="row">
             <div class="col">
                 <div class="card shadow-lg" >
-                  <h5 class="card-header">Summary</h5>
+                  <h5 class="card-header">Summary <a href="{% url 'export' %}"><button type="button" class="btn btn-primary">Export <i class="fas fa-file-export"></i></button></a></h5>
                   <div class="card-body text-left">
                       <p>{{ summary|linebreaks }}</p>
                   </div>
                 </div>
             </div>
         </div>
-
     </div>
-
+    <br>
+    <div class="card text-dark" style="position: relative; width:800px">
+        <canvas id="myChart" ></canvas>
+    </div>
 </main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+<script type="text/javascript">
+    var json = '{{ json }}';
+    json = json.replace(/&quot;/ig,'"');
+    var result = JSON.parse(json);
+
+    console.log("Hello");
+    var ctx = document.getElementById('myChart').getContext('2d');
+
+    var confidence= 0;
+
+    if(result.Emotional_Stability == 1){
+        confidence +=1;
+    }
+    if(result.Personal_Harmony == 1){
+        confidence +=1;
+    }
+    if(result.Lack_of_Discipline == 0){
+        confidence +=1;
+    }
+    if(result.Mental_Energy_or_Will_power == 1){
+        confidence +=1;
+    }
+    if(result.Non_Communicativeness == 0){
+        confidence +=1;
+    }
+    if(result.Social_Isolation == 0){
+        confidence +=1;
+    }
+    if(result.Poor_Concentration == 0){
+        confidence +=1;
+    }
+
+    console.log(confidence);
+    confidence = (confidence/7)*100;
+    data = {
+        datasets: [{
+            data: [confidence,100-confidence],
+            backgroundColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 255, 255, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+        }],
+
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+            'Confidence Level',
+        ]
+    };
+
+    // For a pie chart
+    var myPieChart = new Chart(ctx,{
+        type: 'pie',
+        data: data,
+    });
+</script>
 {% endblock %}

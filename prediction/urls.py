@@ -4,7 +4,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from . import views
 urlpatterns = [
-    url(r'^predict/', views.simple_upload),
+    url(r'^home/', views.index, name='index'),
+    url(r'^predict/', views.simple_upload, name='predict'),
+    url(r'^export/', views.export, name="export"),
 ]
 
 if settings.DEBUG:
